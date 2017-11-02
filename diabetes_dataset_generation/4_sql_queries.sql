@@ -17,16 +17,16 @@ CREATE TABLE p2v_patients_outcome (
 
 INSERT INTO p2v_patients_outcome
 SELECT * FROM
-  EXTERNAL '<PATH_TO_THE_PROJECT>/patient2vec_diabetes/data/intermediate/patient_list.csv'
+  EXTERNAL '<PATH_TO_THE_PROJECT>/patient2vec/data/intermediate/patient_list.csv'
 USING
 (
  DELIMITER ','
- LOGDIR '<PATH_TO_THE_PROJECT>/patient2vec_diabetes/log'
+ LOGDIR '<PATH_TO_THE_PROJECT>/patient2vec/log'
  SKIPROWS 1
  Y2BASE 2000
  ENCODING 'internal'
  REMOTESOURCE 'JDBC' -- alternative is 'ODBC'
- ESCAPECHAR '\\'
+ ESCAPECHAR '\'
  QUOTEDVALUE 'DOUBLE'
 )
 
@@ -98,4 +98,4 @@ CREATE TABLE p2v_diabetes_all_patients_events AS
 );
 
 -- data/raw/diabetes_patients_codes.csv
-select * from p2v_diabetes_all_patients_events;
+SELECT * FROM p2v_diabetes_all_patients_events;

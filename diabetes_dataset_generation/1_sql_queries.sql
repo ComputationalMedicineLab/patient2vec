@@ -55,15 +55,15 @@ CREATE TABLE p2v_diabetes_drug_patients AS
 );
 
 -- data/raw/diabetes_drug.csv
-select * from p2v_diabetes_drug_patients; -- 14,560 rows
+SELECT * FROM p2v_diabetes_drug_patients; -- 14,560 rows
 
 -------------------------------------------------------------------------------
 -- TABLE p2v_diabetes_drug_controls
 -------------------------------------------------------------------------------
 -- Contains list of patients matching criteria for type 2 diabates control
 -- Criteria include:
---  - Patient has no mention of any medication from ATC group A10B
---    (BLOOD GLUCOSE LOWERING DRUGS, EXCL. INSULINS) (generic_rxnorm_id
+--  - Patient has no mention of any medication from ATC group A10
+--    (DRUGS USED IN DIABETES) (generic_rxnorm_id
 --    in (...))
 --  - Patient has a least 10 ICD-9 recorded ('distinct' by day)
 --  - Patient has a least 12 months of recorded history
@@ -84,7 +84,8 @@ CREATE TABLE p2v_diabetes_drug_controls AS
     	SELECT distinct ind_seq, code, entry_date FROM icd_codes
     	WHERE
     	ind_seq NOT IN
-    		(SELECT distinct ind_seq FROM medex WHERE generic_rxnorm_id in ('173','2068','2404','4815','4816','4821','6809','8129','10633','10635','16681','18880','25789','25793','26344','30009','33738','60548','72610','73044','84108','102846','102848','139953','274332','475968','593411','596554','606253','607999','614348','647235','729717','802646','857974','1043562','1100699','1189803','1243019','1368001','1368384','1368402','1373458','1440051','1486436','1488564','1534763','1545149','1545653','1551291','1598392','1664314','1727500'))
+    		(SELECT distinct ind_seq FROM medex WHERE rxnorm_id IN ('16681', '173', '1534763', '1368001', '1368384', '1368402', '18880', '1373458', '1545149', '2068', '2404', '1488564', '1486436', '1727500', '1551291', '1545653', '1598392', '1664314', '60548', '102846', '4816', '25789', '647235', '606253', '4821', '25793', '4815', '102848', '26344', '1670007', '1727493', '139825', '274783', '86009', '400008', '1309342', '1100699', '1243019', '475968', '1440051', '6809', '607999', '802646', '614348', '1043562', '729717', '30009', '274332', '8129', '33738', '139953', '253182', '73044', '84108', '857974', '1189803', '593411', '10633', '10635', '38386', '72610', '596554')
+        OR generic_rxnorm_id IN ('16681', '173', '1534763', '1368001', '1368384', '1368402', '18880', '1373458', '1545149', '2068', '2404', '1488564', '1486436', '1727500', '1551291', '1545653', '1598392', '1664314', '60548', '102846', '4816', '25789', '647235', '606253', '4821', '25793', '4815', '102848', '26344', '1670007', '1727493', '139825', '274783', '86009', '400008', '1309342', '1100699', '1243019', '475968', '1440051', '6809', '607999', '802646', '614348', '1043562', '729717', '30009', '274332', '8129', '33738', '139953', '253182', '73044', '84108', '857974', '1189803', '593411', '10633', '10635', '38386', '72610', '596554'))
     ) AS codes
     GROUP BY ind_seq
   ) as patients
@@ -93,4 +94,4 @@ CREATE TABLE p2v_diabetes_drug_controls AS
 );
 
 -- data/raw/diabetes_drug_control.csv
-select * from p2v_diabetes_drug_controls; -- 717,781 rows
+SELECT * FROM p2v_diabetes_drug_controls; -- 660,773 rows

@@ -10,13 +10,13 @@ MODELS_DIR = "../models/patient2vec"
 SEED = 1
 WORKERS = 240
 INITIAL_LEARNING_RATE = 0.025
-MINIMAL_LEARNING_RATE = 0.0005
-TRAIN_ITERATIONS = 100
+MINIMAL_LEARNING_RATE = 0.001
+TRAIN_ITERATIONS = 20
 MIN_COUNT = 250
 
 optim_training_algos = ["pvdm", "pvdbow"]
 optim_embedding_sizes = [100, 300, 500]
-optim_window_sizes = [50, 30, 100]
+optim_window_sizes = [5, 10, 20, 30, 50]
 optim_softmax_methods = ["hs", "ns"]
 
 documents = dill.load(open(DOCUMENTS_FILE, "rb"))

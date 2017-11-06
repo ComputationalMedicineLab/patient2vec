@@ -15,7 +15,7 @@ TRAIN_ITERATIONS = 20
 MIN_COUNT = 250
 
 optim_training_algos = ["pvdm", "pvdbow"]
-optim_embedding_sizes = [100, 300, 500]
+optim_embedding_sizes = [10, 50, 100, 300, 500, 1000]
 optim_window_sizes = [5, 10, 20, 30, 50]
 optim_softmax_methods = ["hs", "ns"]
 

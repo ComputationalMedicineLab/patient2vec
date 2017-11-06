@@ -12,12 +12,13 @@
 CREATE TABLE p2v_patients_outcome (
     CUTOFF_DATE varchar(255),
     IND_SEQ int,
-    OUTCOME int
+    OUTCOME int,
+    T_GROUP varchar(63)
 );
 
 INSERT INTO p2v_patients_outcome
 SELECT * FROM
-  EXTERNAL '<PATH_TO_THE_PROJECT>/patient2vec/data/intermediate/patient_list.csv'
+  EXTERNAL '<PATH_TO_THE_PROJECT>/patient2vec/data/intermediate/patient_list_split.csv'
 USING
 (
  DELIMITER ','

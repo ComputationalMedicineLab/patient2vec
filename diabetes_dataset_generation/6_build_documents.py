@@ -7,7 +7,7 @@ DOCUMENTS_OUTPUT_FILE = '../data/intermediate/diabetes_documents.dill'
 
 tp = pd.read_csv(PATIENT_HISTORY_FILE, iterator=True, chunksize=10**5, sep='|', index_col=None, header=None)
 patient_history_df = pd.concat(tp, ignore_index=True)
-patient_history_df.columns = ["IND_SEQ", "ENTRY_DATE", "CODE"]
+patient_history_df.columns = ["IND_SEQ", "ENTRY_DATE", "CODE", "TYPE"]
 patient_history_groups_by_patient = patient_history_df.groupby(by=['IND_SEQ'])
 
 documents = {}

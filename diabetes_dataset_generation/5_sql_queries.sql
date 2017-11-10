@@ -46,7 +46,7 @@ USING
 CREATE TABLE p2v_diabetes_all_patients_events AS
 (
   (
-    SELECT DISTINCT ind_seq, entry_date, code FROM
+    SELECT DISTINCT ind_seq, entry_date, code, 'icd' as type FROM
     (
       SELECT codes.ind_seq, codes.entry_date, codes.code, outcome.cutoff_date FROM
         (
@@ -62,7 +62,7 @@ CREATE TABLE p2v_diabetes_all_patients_events AS
   )
   UNION ALL
   (
-    SELECT DISTINCT ind_seq, entry_date, test_sname as code FROM
+    SELECT DISTINCT ind_seq, entry_date, test_sname as code, 'lab' as type FROM
     (
       SELECT labs.ind_seq, labs.entry_date, labs.test_sname, outcome.cutoff_date FROM
         (
@@ -78,7 +78,7 @@ CREATE TABLE p2v_diabetes_all_patients_events AS
   )
   UNION ALL
   (
-    SELECT DISTINCT ind_seq, entry_date, generic_name as code FROM
+    SELECT DISTINCT ind_seq, entry_date, generic_name as code, 'med' as type FROM
     (
       SELECT meds.ind_seq, meds.entry_date, meds.generic_name, outcome.cutoff_date FROM
         (

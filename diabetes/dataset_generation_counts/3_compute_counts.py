@@ -41,7 +41,7 @@ def icd_to_phewas(icd_codes):
     phewas_codes = []
     for code in icd_codes:
         if code in icd_phewas_map.keys():
-            phewas_codes.append(icd_phewas_map[code])
+            phewas_codes.append(str(icd_phewas_map[code]))
     return phewas_codes
 
 def meds_to_atc(meds):

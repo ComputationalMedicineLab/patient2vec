@@ -50,8 +50,8 @@ CREATE TABLE p2v_diabetes_meds_atc_map AS
   	(SELECT DISTINCT code FROM p2v_diabetes_all_patients_events WHERE type = 'med')
 )
 
--- data/intermediate/generic_name_atc_map.csv
+-- diabetes/data/intermediate/generic_name_atc_map.csv
 SELECT * FROM p2v_diabetes_meds_atc_map ORDER BY generic_name;
 
--- data/intermediate/icd_phewas_map.csv
+-- diabetes/data/intermediate/icd_phewas_map.csv
 SELECT * FROM icd_phewas_map ORDER BY icd_code;

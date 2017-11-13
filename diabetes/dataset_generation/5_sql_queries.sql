@@ -98,5 +98,5 @@ CREATE TABLE p2v_diabetes_all_patients_events AS
   ORDER BY ind_seq, entry_date
 );
 
--- data/raw/diabetes_patients_codes.csv
+-- diabetes/data/raw/diabetes_patients_codes.csv
 SELECT * FROM p2v_diabetes_all_patients_events;

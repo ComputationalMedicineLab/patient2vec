@@ -5,7 +5,7 @@ import dill
 from gensim.models.doc2vec import *
 
 DOCUMENTS_FILE = "../data/final/patient2vec_documents.dill"
-MODELS_DIR = "../models/patient2vec"
+MODELS_DIR = "../models"
 
 SEED = 1
 WORKERS = 240

@@ -13,5 +13,5 @@ CREATE TABLE p2v_all_patients_events_combined AS
   ORDER BY ind_seq, entry_date
 );
 
--- data/raw/all_patients_events_combined.csv
+-- patient2vec/data/raw/all_patients_events_combined.csv
 select * from p2v_all_patients_events_combined;

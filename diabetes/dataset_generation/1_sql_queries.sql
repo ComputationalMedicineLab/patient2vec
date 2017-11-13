@@ -54,7 +54,7 @@ CREATE TABLE p2v_diabetes_drug_patients AS
   ORDER BY ind_seq
 );
 
--- data/raw/diabetes_drug.csv
+-- diabetes/data/raw/diabetes_drug.csv
 SELECT * FROM p2v_diabetes_drug_patients; -- 14,560 rows
 
 -------------------------------------------------------------------------------

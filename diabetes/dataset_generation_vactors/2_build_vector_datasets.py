@@ -7,10 +7,10 @@ import gensim
 from tqdm import tqdm
 
 
-PATIENT2VEC_MODEL_DIR = '../models/patient2vec/'
+PATIENT2VEC_MODEL_DIR = '../../patient2vec/models/'
 PATIENT_LIST = '../data/intermediate/patient_list_split.csv'
 PATIENT_DOCUMENTS = '../data/intermediate/diabetes_documents.dill'
-VECTORS_OUTPUT_DIR = '../data/final/vectors_by_model'
+VECTORS_OUTPUT_DIR = '../data/final/vectors'
 
 patient_list = pd.read_csv(PATIENT_LIST)
 patient_groups = patient_list.groupby(by=['GROUP'])

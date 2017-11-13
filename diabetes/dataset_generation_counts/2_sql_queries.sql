@@ -18,7 +18,7 @@ CREATE TABLE p2v_rxcui_atc_map (
 
 INSERT INTO p2v_rxcui_atc_map
 SELECT * FROM
-  EXTERNAL '<PATH_TO_THE_PROJECT>/patient2vec/data/intermediate/rxcui_atc_map.csv'
+  EXTERNAL '<PATH_TO_THE_PROJECT>/patient2vec/diabetes/data/intermediate/rxcui_atc_map.csv'
 USING
 (
  DELIMITER ','

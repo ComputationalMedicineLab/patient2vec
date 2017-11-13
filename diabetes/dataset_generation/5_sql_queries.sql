@@ -18,7 +18,7 @@ CREATE TABLE p2v_patients_outcome (
 
 INSERT INTO p2v_patients_outcome
 SELECT * FROM
-  EXTERNAL '<PATH_TO_THE_PROJECT>/patient2vec/data/intermediate/patient_list_split.csv'
+  EXTERNAL '<PATH_TO_THE_PROJECT>/patient2vec/diabetes/data/intermediate/patient_list_split.csv'
 USING
 (
  DELIMITER ','

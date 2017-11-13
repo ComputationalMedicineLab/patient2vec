@@ -1,3 +1,4 @@
 *
 !.gitignore
-!vectors_by_model
+!vectors
+!counts

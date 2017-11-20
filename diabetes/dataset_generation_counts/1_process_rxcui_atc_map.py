@@ -7,9 +7,9 @@ import pandas as pd
 # (https://mor.nlm.nih.gov/RxMix/):
 # - Fuction getClassByRxNormDrugId (relaSource=ATC)
 # - Input: batch, all RxNorm RXCUIs ("check all")
-RXCUI_ATC_TAR_FILE = '../../data/raw/rxcui_atc_map.tar.gz'
+RXCUI_ATC_TAR_FILE = '../data/raw/rxcui_atc_map.tar.gz'
 RXCUI_ATC_FILE_NAME = 'rxcui_atc_map.text'
-RXCUI_ATC_CSV_OUTPUT = '../../data/intermediate/rxcui_atc_map.csv'
+RXCUI_ATC_CSV_OUTPUT = '../data/intermediate/rxcui_atc_map.csv'
 
 tar = tarfile.open(RXCUI_ATC_TAR_FILE, mode="r:gz")
 map_file = tar.extractfile(RXCUI_ATC_FILE_NAME).read()

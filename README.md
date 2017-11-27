@@ -12,3 +12,5 @@
   - `dataset_generation` - contains scripts, notebooks and queries to download data, select and split cohorts
   - `dataset_generation_vectors` - contains scripts to generate patient2vec vector based data; requires models in `/patient2vec/models` directory
   - `dataset_generation_counts` - contains scripts to generate PHEWAS, ATC counts data
+  - `classification_counts` - contains scripts to train and test classification models on count based data
+  - `classification_vactors` - contains scripts to train and test classification models on vector based data

@@ -3,17 +3,17 @@
 -------------------------------------------------------------------------------
 -- RXCUID to ATC mapping
 -- Columns:
---  - RXCUID
---  - GENERIC_RXCUID
 --  - ATC_CLASS
 --  - ATC_DESC - description of the ATC class
+--  - RXCUID
+--  - GENERIC_RXCUID
 -------------------------------------------------------------------------------
 
 CREATE TABLE p2v_rxcui_atc_map (
-    rxcuid varchar(15),
-    generic_rxcuid varchar(15),
-    atc_class varchar(63),
-    atc_desc varchar(255)
+  rxcuid varchar(15),
+  generic_rxcuid varchar(15),
+  atc_class varchar(63),
+  atc_desc varchar(255)
 );
 
 INSERT INTO p2v_rxcui_atc_map
@@ -32,7 +32,7 @@ USING
 )
 
 -------------------------------------------------------------------------------
--- TABLE p2v_rxcui_atc_map
+-- TABLE p2v_diabetes_meds_atc_map
 -------------------------------------------------------------------------------
 -- Generic drug name to ATC mapping (for drugs in
 -- p2v_diabetes_all_patients_events table)

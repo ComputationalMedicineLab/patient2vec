@@ -1,15 +1,22 @@
 from collections import Counter
 
+import arrow
 import dill
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
 
+MONTHS_BEFORE = [0, 1, 3, 6, 12]
+
+PATIENT_LIST_FILE = '../data/intermediate/patient_list.csv'
 PATIENT_HISTORY_FILE = '../data/raw/diabetes_patients_codes.csv'
 ICD_PHEWAS_MAP_FILE = '../data/intermediate/icd_phewas_map.csv'
 MED_ATC_MAP_FILE = '../data/intermediate/generic_name_atc_map.csv'
 COUNTS_OUTPUT_FILE = '../data/intermediate/diabetes_raw_counts.dill'
 
+patient_list_df = pd.read_csv(PATIENT_LIST_FILE)
+patient_cutoff_map = dict(zip(patient_list_df['IND_SEQ'].values.tolist(),
+                              patient_list_df['CUTOFF_DATE'].values.tolist()))
 
 # ICD-9 to PHEWAS group dictionary
 icd_phewas_map_df = pd.read_csv(ICD_PHEWAS_MAP_FILE)
@@ -52,21 +59,25 @@ def meds_to_atc(meds):
             atc_classes += med_atc_map[med]
     return atc_classes
 
-counts_dict = {}
+counts_dict = {k: {} for k in MONTHS_BEFORE}
 
 for patient, patient_history in tqdm(patient_history_groups_by_patient, total=len(patient_history_groups_by_patient), leave=True):
-    patient_type_groups = patient_history.groupby(by=['TYPE'])
-    phewas_codes = []
-    atc_classes = []
-    labs = []
-    if 'icd' in patient_type_groups.groups.keys():
-        icd_codes = patient_type_groups.get_group('icd')['CODE'].values.tolist()
-        phewas_codes = icd_to_phewas(icd_codes)
-    if 'med' in patient_type_groups.groups.keys():
-        meds = patient_type_groups.get_group('med')['CODE'].values.tolist()
-        atc_classes = meds_to_atc(meds)
-    if 'lab' in patient_type_groups.groups.keys():
-        labs = patient_type_groups.get_group('lab')['CODE'].values.tolist()
-    counts_dict[patient] = dict(Counter(phewas_codes + atc_classes + labs))
+    for months_before in MONTHS_BEFORE:
+        patients_cutoff_date = arrow.get(patient_cutoff_map[patient])
+        patients_shifted_date = patients_cutoff_date.shift(months=-months_before).format('YYYY-MM-DD')
+        patient_history_cut = patient_history[patient_history['ENTRY_DATE'] <= patients_shifted_date]
+        patient_type_groups = patient_history_cut.groupby(by=['TYPE'])
+        phewas_codes = []
+        atc_classes = []
+        labs = []
+        if 'icd' in patient_type_groups.groups.keys():
+            icd_codes = patient_type_groups.get_group('icd')['CODE'].values.tolist()
+            phewas_codes = icd_to_phewas(icd_codes)
+        if 'med' in patient_type_groups.groups.keys():
+            meds = patient_type_groups.get_group('med')['CODE'].values.tolist()
+            atc_classes = meds_to_atc(meds)
+        if 'lab' in patient_type_groups.groups.keys():
+            labs = patient_type_groups.get_group('lab')['CODE'].values.tolist()
+        counts_dict[months_before][patient] = dict(Counter(phewas_codes + atc_classes + labs))
 
 dill.dump(counts_dict, open(COUNTS_OUTPUT_FILE, 'wb'))

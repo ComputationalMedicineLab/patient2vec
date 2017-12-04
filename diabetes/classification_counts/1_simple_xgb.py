@@ -14,13 +14,13 @@ N_ESTIMATORS = 2000
 
 # Logging setup
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO,
-                    format='%(asctime)s: %(levelname)s: %(message)s')
+                    format='%(message)s')
 
 # Loading data
 data = dill.load(open(DATA_FILE, 'rb'))
 
 
-for months_before in data.keys():
+for months_before in sorted(list(data.keys())):
     train_x = data[months_before]["TRAIN"]["X"]
     train_y = data[months_before]["TRAIN"]["y"]
     test_x = data[months_before]["TEST"]["X"]

@@ -3,16 +3,16 @@
 -------------------------------------------------------------------------------
 -- Contains list of patients matching criteria for type 2 diabates.
 -- Criteria include:
---  - Patient has more than 10 complete record of medication from ATC group
+--  - Patient has more than 10 complete records of medication from ATC group
 --    A10B (BLOOD GLUCOSE LOWERING DRUGS, EXCL. INSULINS) (generic_rxnorm_id
 --    or rxnorm_id in (...))
 --  - Full record of medication includes drug_strength, route and drug_freq
---  - Patient has a least 10 ICD-9 recorded before the first occurence of
+--  - Patient has a least 10 ICD-9 recorded before the first occurrence of
 --    a A10B medication ('distinct' by day)
 --  - Patient has a least 24 months of recorded history before the first
---    occurence of a A10B medication
+--    occurrence of a A10B medication
 --  - Patient has a less than 500 months of recorded history before the first
---    occurence of a A10B medication (more than 500 indicate an error in records)
+--    occurrence of a A10B medication (more than 500 indicate an error in records)
 --  - Patient has no complete record of any medication from ATC group A10
 --    (DRUGS USED IN DIABETS) before first complete record of A10B medication
 -- Columns:
@@ -102,10 +102,9 @@ SELECT * FROM p2v_diabetes_drug_patients; -- 10,477 rows
 -- Contains list of patients matching criteria for type 2 diabates control
 -- Criteria include:
 --  - Patient has no mention of any medication from ATC group A10
---    (DRUGS USED IN DIABETES) (generic_rxnorm_id
---    in (...))
+--    (DRUGS USED IN DIABETES) (generic_rxnorm_id or rxnorm_id in (...))
 --  - Patient has a least 10 ICD-9 recorded ('distinct' by day)
---  - Patient has a least 12 months of recorded history
+--  - Patient has a least 24 months of recorded history
 --  - Patient has less than 500 months of recorded history
 --    (more than 500 indicate an error in records)
 -- Columns:

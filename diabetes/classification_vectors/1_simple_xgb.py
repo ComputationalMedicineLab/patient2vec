@@ -8,7 +8,7 @@ from xgboost.sklearn import XGBClassifier
 from sklearn.metrics import log_loss, roc_auc_score
 
 DATA_DIR = '../data/final/vectors/'
-LOG_FILE = '../../log/diabetes_vectors_simple_xgb.log'
+LOG_FILE = '../log/diabetes_vectors_simple_xgb.log'
 N_JOBS = 35
 N_ESTIMATORS = 2000
 

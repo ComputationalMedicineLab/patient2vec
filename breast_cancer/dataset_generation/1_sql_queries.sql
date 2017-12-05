@@ -3,14 +3,14 @@
 -------------------------------------------------------------------------------
 -- Contains list of patients matching criteria for breast cancer.
 -- Criteria include:
---  - Patient at least 3 ICD-9 codes from 174 group (Malignant neoplasm of
+--  - Patient has at least 3 ICD-9 codes from 174 group (Malignant neoplasm of
 --    female breast)
 --  - Patient has a least 10 ICD-9 recorded before the first occurrence of
---    code from 174 group
+--    a 174.* code
 --  - Patient has a least 24 months of recorded history before the first
 --    occurrence of a 174.* code
 --  - Patient has a less than 500 months of recorded history before the first
---    occurrence of of a 174.* code
+--    occurrence of a 174.* code
 -- Columns:
 --  - ind_seq
 --  - first_breast_cancer - date of the first occurrence of a 174.* code
@@ -63,7 +63,7 @@ SELECT * FROM p2v_breast_cancer_patients; -- 2,901 rows
 --    breast)
 --  - Patient is female
 --  - Patient has a least 10 ICD-9 recorded ('distinct' by day)
---  - Patient has a least 12 months of recorded history
+--  - Patient has a least 24 months of recorded history
 --  - Patient has less than 500 months of recorded history
 --    (more than 500 indicate an error in records)
 -- Columns:

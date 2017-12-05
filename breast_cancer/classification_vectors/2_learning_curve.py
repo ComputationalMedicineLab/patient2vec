@@ -8,7 +8,7 @@ from xgboost.sklearn import XGBClassifier
 from sklearn.metrics import log_loss, roc_auc_score
 
 np.random.seed(1)
-TRAINING_SAMPLE_SIZES = [10, 50, 100, 250, 500, 750, 1000, 1500, 2000]
+TRAINING_SAMPLE_SIZES = [10, 50, 100, 250, 500, 750, 1000, 1500, 2000, 3000, 4000]
 TRAINING_FOR_EACH_SIZE = 10
 MONTHS = 0
 

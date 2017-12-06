@@ -33,9 +33,9 @@ test_y = data[MONTHS]["TEST"]["y"]
 def draw_samples(number):
     # Generates a balanced dataset of given size from training data
     # (sampling without replacement)
-    negetive_to_positive_ratio = train_y.sum()/len(train_y)
-    negative_no = int(np.floor(negetive_to_positive_ratio*number))
-    positive_no = number-negative_no
+    positive_to_negetive= train_y.sum()/len(train_y)
+    positive_no = int(np.floor(positive_to_negetive*number))
+    negative_no = number-positive_no
     all_negative_indexes = np.where(train_y == 0)[0]
     all_positive_indexes = np.where(train_y == 1)[0]
     negative_indexes = np.random.choice(all_negative_indexes, size=negative_no,

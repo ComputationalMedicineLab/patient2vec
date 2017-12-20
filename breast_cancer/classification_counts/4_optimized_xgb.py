@@ -9,6 +9,7 @@ from sklearn.metrics import log_loss, roc_auc_score
 
 DATA_FILE = '../data/final/counts/breast_cancer_counts.dill'
 LOG_FILE = '../log/breast_cancer_counts_optimized_xgb.log'
+RESULTS_FILE = '../log/breast_cancer_counts_results.dill'
 N_JOBS = 30
 
 optimized_params = {
@@ -25,6 +26,8 @@ optimized_params = {
     'silent': False,
     'n_jobs': N_JOBS
 }
+
+results = {}
 
 # Logging setup
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO,
@@ -49,4 +52,10 @@ for months_before in sorted(list(data.keys())):
     auc_score = roc_auc_score(test_y, pred_y[:,1])
     log_score = log_loss(test_y, pred_y)
 
+    results[months_before] = {}
+    results[months_before]['true_y'] = test_y
+    results[months_before]['pred_y'] = pred_y
+
     logging.info('{}, {}, {}'.format(months_before, auc_score, log_score))
+
+dill.dump(results, open(RESULTS_FILE, 'wb'))

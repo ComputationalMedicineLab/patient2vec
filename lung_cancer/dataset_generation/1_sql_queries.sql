@@ -93,8 +93,11 @@ CREATE TABLE p2v_lung_cancer_biopsy_patients_with_cancer_temp AS
 
 
 -- List of patients with lung cancer diagnosed after lung biopsy (months_between >= 0)
+-- and have at least two lung cancer codes (162.*) (lung_cancer_count >= 2)
 -- lung_cancer/data/raw/lung_biopsy_cancer.csv
-SELECT * FROM p2v_lung_cancer_biopsy_patients_with_cancer_temp WHERE months_between >= 0
+SELECT * FROM p2v_lung_cancer_biopsy_patients_with_cancer_temp
+WHERE months_between >= 0
+AND lung_cancer_count >= 2
 -- 1,185 rows
 
 -- List of patients with lung biopsy, but no lung cancer

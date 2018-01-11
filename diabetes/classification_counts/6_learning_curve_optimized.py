@@ -8,15 +8,15 @@ from xgboost.sklearn import XGBClassifier
 from sklearn.metrics import log_loss, roc_auc_score
 
 np.random.seed(1)
-TRAINING_SAMPLE_SIZES = [10, 50, 100, 250, 500, 1000, 2000, 2500, 5000,
-                         7500, 10000, 12500, 15000]
+TRAINING_SAMPLE_SIZES = [10, 50, 100, 250, 500, 750, 1000, 1500, 2000, 3000, 4000]
 TRAINING_FOR_EACH_SIZE = 10
-MONTHS = 0
+MONTHS = 12
 
-DATA_FILE = '../data/final/vectors/vectors_patient2vec_pvdbow_hs_win-20_emb-100.dill'
-LOG_FILE = '../log/diabetes_vectors_simple_learning_curves.log'
+DATA_FILE = '../data/final/counts/diabetes_counts.dill'
+LOG_FILE = '../log/diabetes_counts_monthly_optimized_learning_curves.log'
 N_JOBS = 30
-N_ESTIMATORS = 2000
+
+rand_search = dill.load(open('../log/diabetes_counts_parameter_monthly_optim_xgb.dill', 'rb'))
 
 # Logging setup
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO,
@@ -50,8 +50,12 @@ def draw_samples(number):
 for training_sample_size in TRAINING_SAMPLE_SIZES:
     for _ in range(TRAINING_FOR_EACH_SIZE):
         sampled_x, sampled_y = draw_samples(training_sample_size)
-        clf = XGBClassifier(n_estimators=N_ESTIMATORS, random_state=1,
-                            verbose=1, n_jobs=N_JOBS)
+
+        best_params = rand_search[MONTHS].best_params_
+        best_params['random_state'] = 1
+        best_params['n_jobs'] = N_JOBS
+
+        clf = XGBClassifier(**best_params)
         clf.fit(sampled_x, sampled_y, verbose=True)
         pred_y = clf.predict_proba(test_x)
 

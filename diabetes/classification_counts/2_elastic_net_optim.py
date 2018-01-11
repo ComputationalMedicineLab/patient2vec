@@ -4,26 +4,20 @@ import os
 
 import dill
 import numpy as np
-from scipy.stats import randint
+from scipy.stats import uniform
 
-from xgboost.sklearn import XGBClassifier
+from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import RandomizedSearchCV
 
 DATA_FILE = '../data/final/counts/diabetes_counts.dill'
-OPTIM_FILE = '../log/diabetes_counts_parameter_optim_xgb.dill'
-N_JOBS = 10
+OPTIM_FILE = '../log/diabetes_counts_parameter_optim_elasticnet.dill'
+N_JOBS = 30
 N_RANDOM_SEARCH_ITER = 250
 MONTHS = 12
 
 param_dist = {
-    "max_depth": randint(3, 10),
-    "min_child_weight": randint(1, 6),
-    "gamma": [0, 0.1, 0.2],
-    "subsample": [0.7, 0.8, 0.9, 1],
-    "colsample_bytree": [0.7, 0.8, 0.9, 1],
-    "reg_alpha": [0, 0.0001, 0.001, 0.005, 0.01, 0.05, 0.1],
-    "learning_rate": [0.01, 0.05, 0.1, 0.2],
-    "n_estimators": [100, 500, 1000, 2000, 3000, 4000, 5000]
+    "alpha": [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1],
+    "l1_ratio": uniform()
 }
 
 def report(results, n_top=4):
@@ -44,9 +38,9 @@ train_x = data[MONTHS]["TRAIN"]["X"]
 train_y = data[MONTHS]["TRAIN"]["y"]
 
 # Parameter search
-clf = XGBClassifier(random_state=1, n_jobs=N_JOBS, silent=True)
+clf = SGDClassifier(loss='log', penalty='elasticnet', random_state=1, max_iter=1000)
 random_search = RandomizedSearchCV(clf, param_distributions=param_dist,
-                                   n_iter=N_RANDOM_SEARCH_ITER)
+                                   n_iter=N_RANDOM_SEARCH_ITER, n_jobs=N_JOBS)
 random_search.fit(train_x, train_y)
 
 # Displaying and saving results

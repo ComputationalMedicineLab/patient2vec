@@ -8,54 +8,43 @@ from xgboost.sklearn import XGBClassifier
 from sklearn.metrics import log_loss, roc_auc_score
 
 DATA_DIR = '../data/final/vectors_improved/'
-LOG_FILE = '../log/lung_cancer_vectors_optimized_xgb.log'
-RESULTS_FILE = '../log/lung_cancer_vectors_results.dill'
+LOG_FILE = '../log/lung_cancer_vectors_monthly_optimized_xgb.log'
+RESULTS_FILE = '../log/lung_cancer_vectors_monthly_optimized_results.dill'
 N_JOBS = 30
+
+data_files = [
+    'vectors_patient2vec_pvdbow_hs_win-30_emb-100.dill',
+    'vectors_patient2vec_pvdbow_hs_win-30_emb-50.dill',
+    'vectors_patient2vec_pvdbow_hs_win-50_emb-100.dill',
+    'vectors_patient2vec_pvdbow_hs_win-5_emb-100.dill',
+]
+
+rand_search = dill.load(open('../log/lung_cancer_vectors_parameter_monthly_optim_xgb.dill', 'rb'))
 
 # Logging setup
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO,
                     format='%(message)s')
 
 
-def file_exists(path):
-    return os.path.isfile(path)
+results = {}
 
 
-def exists_in_log_file(term):
-    try:
-        with open(LOG_FILE, 'r') as f:
-            return (term in f.read())
-    except:
-        pass
-    return False
-
-
-if file_exists(RESULTS_FILE):
-    results = dill.load(open(RESULTS_FILE, 'rb'))
-else:
-    results = {}
-
-vector_optim = dill.load(open('../log/lung_cancer_vectors_parameter_optim_xgb.dill', 'rb'))
-
-for data_file, rand_search in vector_optim.items():
-    if exists_in_log_file(data_file):
-        # Skip if already trained and tested
-        print('Skipping {}'.format(data_file))
-        continue
-
+for data_file in data_files:
     print('Training on {}.'.format(data_file))
 
     # Loading data
     data = dill.load(open(os.path.join(DATA_DIR, data_file), 'rb'))
     results[data_file] = {}
     for months_before in sorted(list(data.keys())):
+        print('\tMonth {}'.format(months_before))
+
         train_x = data[months_before]["TRAIN"]["X"]
         train_y = data[months_before]["TRAIN"]["y"]
         test_x = data[months_before]["TEST"]["X"]
         test_y = data[months_before]["TEST"]["y"]
 
         # Getting best params
-        best_params = rand_search.best_params_
+        best_params = rand_search[data_file][months_before].best_params_
         best_params['random_state'] = 1
         best_params['n_jobs'] = N_JOBS
 

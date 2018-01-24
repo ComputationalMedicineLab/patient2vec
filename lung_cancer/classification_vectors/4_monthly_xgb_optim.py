@@ -30,7 +30,8 @@ param_dist = {
     "colsample_bytree": [0.7, 0.8, 0.9, 1],
     "reg_alpha": [0, 0.0001, 0.001, 0.005, 0.01, 0.05, 0.1],
     "learning_rate": [0.01, 0.05],
-    "n_estimators": [1000, 2000, 3000, 4000, 5000]
+    "n_estimators": [1000, 2000, 3000, 4000, 5000],
+    "max_delta_step": [1, 2, 3, 4, 5]
 }
 
 def file_exists(path):

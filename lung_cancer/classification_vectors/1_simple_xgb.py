@@ -45,6 +45,12 @@ for data_file in data_files:
         test_x = data[months_before]["TEST"]["X"]
         test_y = data[months_before]["TEST"]["y"]
 
+        neg_pos_ratio = (train_y.shape[0]-train_y.sum())/train_y.sum()
+
+        # Creating and training model
+        clf = XGBClassifier(n_estimators=N_ESTIMATORS, random_state=1,
+                            verbose=1, n_jobs=N_JOBS, scale_pos_weight=neg_pos_ratio)
+
         # Creating and training model
         clf = XGBClassifier(n_estimators=N_ESTIMATORS,random_state=1,
                             verbose=1, n_jobs=N_JOBS)
@@ -57,3 +63,5 @@ for data_file in data_files:
         log_score = log_loss(test_y, pred_y)
 
         logging.info('{}, {}, {}, {}'.format(data_file, months_before, auc_score, log_score))
+
+import ipdb; ipdb.set_trace()

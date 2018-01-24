@@ -38,7 +38,8 @@ train_x = data[MONTHS]["TRAIN"]["X"]
 train_y = data[MONTHS]["TRAIN"]["y"]
 
 # Parameter search
-clf = SGDClassifier(loss='log', penalty='elasticnet', random_state=1, max_iter=1000)
+clf = SGDClassifier(loss='log', class_weight="balanced", penalty='elasticnet',
+                    random_state=1, max_iter=1000)
 random_search = RandomizedSearchCV(clf, param_distributions=param_dist,
                                    n_iter=N_RANDOM_SEARCH_ITER, n_jobs=N_JOBS)
 random_search.fit(train_x, train_y)

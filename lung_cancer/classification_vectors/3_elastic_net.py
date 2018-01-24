@@ -58,6 +58,7 @@ for data_file, rand_search in vector_optim.items():
         best_params['random_state'] = 1
         best_params['loss'] = 'log'
         best_params['penalty'] = 'elasticnet'
+        best_params['class_weight'] = "balanced"
         best_params['max_iter'] = 1000
 
         # Creating and training model

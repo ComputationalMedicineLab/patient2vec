@@ -26,9 +26,11 @@ for months_before in sorted(list(data.keys())):
     test_x = data[months_before]["TEST"]["X"]
     test_y = data[months_before]["TEST"]["y"]
 
+    neg_pos_ratio = (train_y.shape[0]-train_y.sum())/train_y.sum()
+
     # Creating and training model
     clf = XGBClassifier(n_estimators=N_ESTIMATORS, random_state=1,
-                        verbose=1, n_jobs=N_JOBS)
+                        verbose=1, n_jobs=N_JOBS, max_delta_step=1) # scale_pos_weight=neg_pos_ratio)
     clf.fit(train_x, train_y, verbose=True)
 
     # Scoring
@@ -38,3 +40,5 @@ for months_before in sorted(list(data.keys())):
     log_score = log_loss(test_y, pred_y)
 
     logging.info('{}, {}, {}'.format(months_before, auc_score, log_score))
+
+import ipdb; ipdb.set_trace()

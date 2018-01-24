@@ -13,12 +13,13 @@ RESULTS_FILE = '../log/lung_cancer_counts_elasticnet_results.dill'
 
 optimized_params = {
     'alpha': 0.05,
-    'l1_ratio': 0.24710349083598082,
+    'l1_ratio': 0.35658718072231277,
     # other params:
     'loss': 'log',
     'penalty': 'elasticnet',
     'max_iter': 1000,
-    'random_state': 1
+    'random_state': 1,
+    "class_weight": "balanced"
 }
 
 # Logging setup
